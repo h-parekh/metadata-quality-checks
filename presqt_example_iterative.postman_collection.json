@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "2d743e0c-23ea-4849-a647-6af5690d3586",
+		"name": "metadata-quality-checks - Iterative",
+		"description": "A suite of tests to check the completeness of the metadata of research data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CINERGI Data Portal - Multiple",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e6f6d0e-b0f7-4b8c-a42c-e831f3aaf378",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Metadata response is a valid JSON structure\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Metadata has required fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('_index');",
+							"    pm.expect(jsonData._index).to.eql(\"metadata_v5\");",
+							"    pm.expect(jsonData._source.title).to.exist;",
+							"    pm.expect(jsonData._source.title).to.have.lengthOf.above(40);",
+							"    pm.expect(jsonData._source.keywords_s).to.include(\"SEA SURFACE TEMPERATURE\")",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://datadiscoverystudio.org/geoportal/rest/metadata/item/{{item_id}}",
+					"protocol": "http",
+					"host": [
+						"datadiscoverystudio",
+						"org"
+					],
+					"path": [
+						"geoportal",
+						"rest",
+						"metadata",
+						"item",
+						"{{item_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "22b49d0a-c220-46e3-a94e-42d077642599",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "59791da4-1598-4df2-aa7b-1900ca749739",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
