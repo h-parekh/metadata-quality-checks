@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "847c48f4-581c-454c-814e-c6aad03349b1",
+		"name": "metadata-quality-checks",
+		"description": "A suite of tests to check the completeness of the metadata of research data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CINERGI Data Portal - Single request example",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e6f6d0e-b0f7-4b8c-a42c-e831f3aaf378",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Metadata response is a valid JSON structure\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Metadata has required fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('_index');",
+							"    pm.expect(jsonData._index).to.eql(\"metadata_v5\");",
+							"    pm.expect(jsonData._source.title).to.exist;",
+							"    pm.expect(jsonData._source.title).to.have.lengthOf.above(40);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://datadiscoverystudio.org/geoportal/rest/metadata/item/389a4b77430047b1baca0a8ea9fee0a8",
+					"protocol": "http",
+					"host": [
+						"datadiscoverystudio",
+						"org"
+					],
+					"path": [
+						"geoportal",
+						"rest",
+						"metadata",
+						"item",
+						"389a4b77430047b1baca0a8ea9fee0a8"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
